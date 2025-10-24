@@ -1,7 +1,7 @@
 import { Component, inject, OnInit, TemplateRef } from '@angular/core';
 import { Product } from '../../interfaces/product';
 import { CommonModule, DecimalPipe, NgClass } from '@angular/common';
-import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsService } from '../../services/products';
 import Swal from 'sweetalert2';
 import {
@@ -89,12 +89,12 @@ export class Table implements OnInit {
     }
   }
 
-  openVerticallyCentered(content: TemplateRef<any>) {
+  openVerticallyCentered(content: TemplateRef<void>) {
     this.form.reset();
     this.modalService.open(content, { centered: true });
   }
 
-  addProduct(modalRef: any) {
+  addProduct(modalRef: NgbModalRef) {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
