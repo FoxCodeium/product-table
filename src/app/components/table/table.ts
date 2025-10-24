@@ -3,6 +3,7 @@ import { Product } from '../../interfaces/product';
 import { CommonModule, DecimalPipe, NgClass } from '@angular/common';
 import { NgbModal, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProductsService } from '../../services/products';
+import Swal from 'sweetalert2';
 import {
   FormBuilder,
   FormControl,
@@ -71,8 +72,21 @@ export class Table implements OnInit {
     });
   }
 
-  deleteProduct(id: number) {
-    this.productsService.deleteProduct(id);
+  async deleteProduct(id: number) {
+    const res = await Swal.fire({
+      title: '¿Eliminar producto?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
+      confirmButtonColor: '#dc3545',
+    });
+    if (res.isConfirmed){
+      this.productsService.deleteProduct(id);
+      await Swal.fire({ icon: 'success', title: 'Eliminado', timer: 1400, showConfirmButton: false });
+
+    }
   }
 
   openVerticallyCentered(content: TemplateRef<any>) {
